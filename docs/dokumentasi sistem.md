@@ -1,46 +1,134 @@
 # BEI Stock Insight
+> **AI-Powered Fundamental Stock Analysis Platform**
 
-> Versi ringkas untuk proposal tugas.
+Platform analisis saham berbasis web yang memanfaatkan data Bursa Efek Indonesia (BEI) untuk membantu pengguna mengeksplorasi, menyaring, memahami, dan membandingkan kondisi fundamental perusahaan melalui visualisasi interaktif dan interpretasi berbantuan AI.
 
-### 1. Latar Belakang Sistem
+---
 
-Investor saat ini punya akses ke banyak data saham dari BEI (harga, laporan keuangan, rasio). Tantangannya, data ini mentah dan sulit dipahami langsung, terutama oleh investor pemula. Visualisasi *treemap* seperti StockMap by Oyenza sudah ada untuk memetakan pasar, tapi hanya sebatas info kepemilikan dan pergerakan harga. Ada peluang besar untuk mengembangkan peta *treemap* yang fokus pada visualisasi fundamental (kesehatan keuangan) yang dipadukan dengan penjelasan AI agar lebih mudah dicerna. Proyek **BEI Stock Insight** dibangun untuk menjawab kebutuhan ini.
+## 1. Lima Fitur Utama
 
-### 2. Problem Statement
+Setiap fitur dirancang memiliki fungsi yang spesifik dan saling mendukung dalam satu alur riset pengguna:
 
-**Masalah Utama:**
-Bagaimana merancang visualisasi interaktif saham BEI yang menyajikan kondisi fundamental perusahaan, sehingga investor pemula-menengah bisa paham tanpa perlu menghitung rasio secara manual?
+| No | Fitur | Status / Prioritas | Deskripsi Singkat |
+|---|---|---|---|
+| **01** | **Fundamental Stock Map** | **P0 (Fitur Utama)** | Visualisasi *treemap* seluruh saham BEI berdasarkan sektor, kapitalisasi pasar (*market cap*), dan indikator fundamental pilihan. |
+| **02** | **Smart Fundamental Screener** | **P0 (Dasar)** | Menyaring saham berdasarkan kriteria fundamental kustom (Pertumbuhan Laba, ROE, PER, Pertumbuhan Pendapatan). |
+| **03** | **Company Fundamental Profile** | **P0 (Utama)** | Menampilkan profil keuangan perusahaan, laporan keuangan, rasio kunci, dan tren pertumbuhan antarperiode. |
+| **04** | **Sector Benchmark** | **P1 (Lanjutan)** | Membandingkan kondisi fundamental suatu emiten dengan emiten sejenis dalam sektor yang sama. |
+| **05** | **AI Fundamental Explanation** | **P1 (Integrasi AI)** | Menyajikan ringkasan dan penjelasan otomatis mengenai kondisi keuangan perusahaan secara naratif berbantuan AI. |
 
-### 3. Analisis Kompetitor & Fokus Pengembangan
+---
 
-Website pembanding utama kita adalah **StockMap by Oyenza**. Kita mengambil konsep visual petanya, tapi mengubah isi datanya.
+## 2. Pemetaan & Analisis Kompetitor (StockMap by Oyenza)
 
-| Aspek | StockMap by Oyenza (Kompetitor) | BEI Stock Insight (Fokus Kita) |
-| --- | --- | --- |
-| **Konsep** | Visualisasi pasar saham BEI. | Peta kondisi *fundamental* saham BEI. |
-| **Indikator** | Info kepemilikan dan harga. | Pertumbuhan Pendapatan, Laba, ROE, PER. |
-| **Warna Peta** | Berdasarkan naik/turun harga. | Berdasarkan metrik fundamental yang dipilih. |
-| **Interpretasi** | Eksplorasi mandiri. | Penjelasan otomatis dari **AI**. |
+Pengembangan sistem ini mengadopsi struktur dashboard dari **StockMap by Oyenza**, namun memfokuskan seluruh indikator pada **analisis fundamental**:
 
-### 4. Fitur Utama: AI Fundamental Stock Map
+| Fitur StockMap (Kompetitor) | Konsep yang Diambil | Pengembangan di BEI Stock Insight | Catatan Diferensiasi |
+|---|---|---|---|
+| **Explore / Market Map** | *Treemap* & pengelompokan sektor | **Fundamental Stock Map** | Warna peta merefleksikan metrik fundamental, bukan sekadar pergerakan harga harian. |
+| **Screener** | Filter & aturan penyaringan saham | **Smart Fundamental Screener** | Lebih terarah pada kriteria fundamental (Pertumbuhan Laba, ROE, PER, Revenue Growth). |
+| **Models** | Model keuangan kuartalan berbasis laporan | **Company Fundamental Profile** | Mengambil ide transparansi data & tren keuangan tanpa spreadsheet forecasting yang terlalu rumit. |
+| **Compare** | Membandingkan pergerakan saham | **Sector Benchmark** | Membandingkan fundamental emiten secara *apples-to-apples* dengan kompetitor sejenis di satu sektor. |
+| **Ask Oyenza** | Interaksi berbantuan AI | **AI Fundamental Explanation** | Memberikan narasi otomatis atas angka-angka rasio keuangan agar mudah dipahami pemula. |
 
-Ini adalah satu-satunya layar utama (*core feature*) di website ini.
+---
 
-* **Tampilan:** Berbentuk kotak-kotak (*treemap*).
-* **Pengelompokan:** Saham dikelompokkan per sektor industri.
-* **Ukuran Kotak:** Menggambarkan *Market Cap* (kapitalisasi pasar).
-* **Warna Kotak:** Menggambarkan performa metrik yang sedang dipilih (contoh: Hijau untuk Revenue Growth yang naik).
-* **Cara Kerja AI:** Saat satu kotak emiten diklik, AI (seperti Gemini) akan merangkum narasi singkat tentang apa arti dari metrik fundamental emiten tersebut.
+## 3. Detail Fitur Tambahan
 
-### 5. Target Pengguna
+### 02 — Smart Fundamental Screener
+Pengguna bisa menyaring saham berdasarkan kriteria tertentu tanpa harus membuka emiten satu per satu.
+* **Contoh Kriteria Filter:**
+  - *Revenue Growth* di atas 10%
+  - *Net Income Growth* positif
+  - *ROE (Return on Equity)* di atas 15%
+  - *PER (Price to Earnings Ratio)* di bawah batas tertentu
+* **Output:** Daftar emiten yang memenuhi seluruh kriteria.
+* **Nilai Tambah:** Membantu pengguna menemukan saham potensial secara objektif berdasarkan indikator yang ditentukan sendiri *(bukan rekomendasi beli)*.
 
-**Investor ritel pemula hingga menengah** yang ingin riset saham berbasis kinerja bisnis, tapi malas atau bingung jika harus membaca tabel laporan keuangan mentah.
+### 03 — Company Fundamental Profile
+Halaman khusus saat pengguna memilih salah satu emiten (misal: **BBCA**):
 
-### 6. Alur Pengguna (User Flow)
+| Bagian Informasi | Data yang Ditampilkan |
+|---|---|
+| **Company Profile** | Nama perusahaan, kode ticker, sektor, sub-industri, dan profil ringkas |
+| **Financial Performance** | Pendapatan (*Revenue*), Laba Bersih (*Net Income*), Total Aset, Total Ekuitas |
+| **Financial Ratios** | ROE, ROA, DER, PER, PBV |
+| **Growth Analysis** | Pertumbuhan pendapatan dan pertumbuhan laba bersih |
+| **Financial History** | Grafik interaktif perkembangan kinerja keuangan tahunan & kuartalan |
 
-1. **Buka Web:** Masuk ke *homepage* BEI Stock Insight.
-2. **Lihat Peta:** Tampil peta *treemap* seluruh saham BEI per sektor.
-3. **Pilih Filter:** User memilih salah satu dari 4 indikator (Revenue Growth, Net Income Growth, ROE, atau PER). Warna peta langsung berubah menyesuaikan data.
-4. **Pilih Saham:** User klik salah satu kotak emiten (misal: BBCA).
-5. **Baca Penjelasan:** Panel detail muncul, menampilkan rangkuman kinerja dan teks penjelasan dari AI tentang kondisi emiten tersebut.
+> **Peran Fitur:** Halaman detail ini menjadi penghubung sentral antara peta saham (*Stock Map*), hasil saringan (*Screener*), perbandingan (*Sector Benchmark*), dan penjelasan AI (*AI Explanation*).
 
+---
+
+## 4. Hubungan & Integrasi Antar-Fitur
+
+Kelima fitur tidak berdiri sendiri, melainkan terintegrasi secara utuh dalam satu alur riset pengguna:
+
+```
+[Dashboard Utama: BEI Stock Insight]
+           │
+     ┌─────┴──────────────────┐
+     ▼                        ▼
+[Fundamental Stock Map]  [Smart Fundamental Screener]
+(Eksplorasi Saham)       (Pencarian Berdasarkan Kriteria)
+     │                        │
+     └───────────┬────────────┘
+                 ▼
+     [Company Fundamental Profile]
+     (Detail Kinerja & Tren Finansial Emiten)
+                 │
+           ┌─────┴────────────────┐
+           ▼                      ▼
+     [Sector Benchmark]    [AI Fundamental Explanation]
+     (Perbandingan Emiten) (Interpretasi Naratif AI)
+                 │                      │
+                 └───────────┬──────────┘
+                             ▼
+                 [Hasil Analisis Fundamental]
+                 Pengguna memahami kondisi kesehatan
+                 dan kinerja bisnis perusahaan
+```
+
+---
+
+## 5. Ruang Lingkup Sistem (Input & Output)
+
+| Fitur | Input Utama | Output Sistem |
+|---|---|---|
+| **Fundamental Stock Map** | Data emiten, *market cap*, indikator fundamental terpilih | Visualisasi *treemap* interaktif per sektor |
+| **Smart Fundamental Screener** | Parameter batas rasio dan pertumbuhan | Tabel daftar saham yang lolos filter |
+| **Company Fundamental Profile** | Ticker emiten, laporan keuangan kuartalan/tahunan | Detail kartu kinerja, tabel rasio, dan grafik tren |
+| **Sector Benchmark** | Ticker terpilih & data emiten sejenis dalam 1 sektor | Tabel & grafik perbandingan rasio emiten vs sektor |
+| **AI Fundamental Explanation** | Hasil rasio finansial, tren pertumbuhan, dan metrik emiten | Rangkuman narasi otomatis yang mudah dipahami |
+
+---
+
+## 6. Alur Pengguna (User Flow)
+
+1. **Buka Web:** Pengguna membuka platform BEI Stock Insight.
+2. **Lihat Peta Saham:** Sistem menyajikan tampilan *Fundamental Stock Map* seluruh saham BEI per sektor.
+3. **Eksplorasi / Filter:** Pengguna memilih metrik visualisasi (misal: ROE) atau membuka menu *Smart Fundamental Screener* untuk menerapkan filter kustom.
+4. **Pilih Emiten:** Pengguna mengklik salah satu kotak emiten (misal: **BBCA**).
+5. **Akses Profil:** Sistem membuka halaman *Company Fundamental Profile*.
+6. **Bandingkan Sektor:** Pengguna dapat membuka tab *Sector Benchmark* untuk membandingkan emiten dengan kompetitor seindustri.
+7. **Generate AI Insight:** Pengguna menekan tombol *Generate AI Insight* untuk mendapatkan penjelasan narasi otomatis dari AI mengenai kondisi fundamental emiten tersebut.
+
+---
+
+## 7. Prioritas & Roadmap Pengembangan
+
+| Fitur | Prioritas | Tingkat Pengerjaan | Fokus MVP |
+|---|---|---|---|
+| **Fundamental Stock Map** | **P0** | Utama | Visualisasi Treemap interaktif dengan selector metrik (Revenue Growth, Net Income Growth, ROE, PER) |
+| **Company Fundamental Profile** | **P0** | Utama | Tampilan detail emiten, kartu ringkasan rasio, dan histori data |
+| **Smart Fundamental Screener** | **P0** | Dasar | Filter multi-parameter dengan tabel hasil filter saham |
+| **Sector Benchmark** | **P1** | Lanjutan | Komparasi metrik emiten vs rata-rata sektor/kompetitor |
+| **AI Fundamental Explanation** | **P1** | Integrasi AI | Prompting AI (Gemini API) untuk interpretasi naratif atas data metrik |
+
+---
+
+## 8. Target Pengguna & Kesimpulan
+
+* **Target Pengguna:** Investor ritel pemula hingga menengah yang ingin riset saham berbasis kinerja bisnis tanpa harus menghitung rasio atau membaca tabel laporan keuangan mentah secara manual.
+* **Fokus Pembeda:** Visualisasi kondisi fundamental saham dalam satu peta interaktif dan penjelasan AI naratif berbasis data keuangan faktual.
+* **Strategi Pengembangan MVP:** Membatasi emiten awal pada saham-saham berkapitalisasi besar (misal LQ45 / IDX30 dari beberapa sektor utama) untuk validasi struktur data dan formula rasio sebelum memperluas cakupan ke seluruh emiten BEI.
