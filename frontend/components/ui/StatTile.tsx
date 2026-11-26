@@ -31,14 +31,14 @@ export const StatTile: React.FC<StatTileProps> = ({
       )}
       {...props}
     >
-      <span className="text-[10px] sm:text-[11px] text-zinc-400 block leading-snug truncate">{label}</span>
-      <span className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 tabular-nums mt-0.5 sm:mt-1 block leading-snug">
+      <span className="text-[10px] sm:text-[11px] text-zinc-400 block leading-snug break-words">{label}</span>
+      <span className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 tabular-nums mt-0.5 sm:mt-1 block leading-snug break-words">
         {value}
       </span>
       {subValue && (
         <span
           className={cn(
-            "text-[9.5px] sm:text-[10px] font-semibold tabular-nums block leading-snug mt-0.5 sm:mt-1 truncate",
+            "text-[9.5px] sm:text-[10px] font-semibold tabular-nums block leading-snug mt-0.5 sm:mt-1 break-words",
             subVariantColors[subValueVariant]
           )}
         >
